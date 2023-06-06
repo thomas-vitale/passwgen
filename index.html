@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Password</title>
+</head>
+<!--1️⃣ code CSS below -->
+
+<style>
+    @import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Koulen&family=Lato&family=Nunito&family=Playfair+Display:ital@1&family=Prata&family=Raleway:ital,wght@1,100&family=Roboto&family=Roboto+Condensed&family=Teko&display=swap');
+   
+    html {
+        font-family: 'Roboto', sans-serif;
+        font-size: 16px;
+        font-weight: 400;
+        line-height: 1.5;
+        width: 50%;
+        height: 50%;
+        margin: auto;
+        
+    } 
+
+    .btn {
+
+        font-family: Roboto, sans-serif;
+        font-weight: 0;
+        font-size: 14px;
+        color: #fff;
+        background-color: #f85b00;
+        padding: 10px 30px;
+        border: 2px solid #f85b00;
+        box-shadow: rgb(0, 0, 0) 0px 0px 0px 0px;
+        border-radius: 50px;
+        transition: 1000ms;
+        transform: translateY(0);
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        cursor: pointer;
+    }
+
+    .btn:hover {
+
+        transition: 1000ms;
+        padding: 10px 50px;
+        transform: translateY(-0px);
+        background-color: #fff;
+        color: #f85b00;
+        border: solid 2px #f85b00;
+    }
+
+    .btn:active,
+    .btn:focus,
+    .btn:visited {
+        transition: 1000ms;
+        padding: 10px 50px;
+        transform: translateY(-0px);
+        background-color: #fff;
+        color: #f85b00;
+        border: solid 2px #f85b00;
+    }
+
+    div {
+        width: 100px;
+        height: 100px;
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        left: 0;
+        right: 0;
+
+        margin: auto;
+    }
+
+    body {
+        background-color: #04131c;
+    }
+</style>
+
+<!-- 2️⃣code HTML below -->
+
+<body>
+    <div>
+        <button class="btn" onclick="pass()">Genera</button>
+        <span></span>
+    </div>
+
+</body>
+<script>
+    function pass(value=0) {
+        let passCode = generatePassCode(value).toString();
+        let group = passCode.match(/.{1,2}/g).map(Number);
+        for (let i = 0; i < group.length; i++) {
+            group[i] = group[i] + 33;
+            if (group[i] <= 90 && group[i] >= 65) {
+                group[i] = String.fromCharCode(group[i]);
+            }
+            if (group[i] <= 122 && group[i] >= 97) {
+                group[i] = String.fromCharCode(group[i]);
+            } else {
+                group[i] = group[i].toString();
+            }
+        }
+        passCode = group.join('');
+        document.querySelector('button').innerHTML = passCode;
+        var inp = document.createElement('input');
+        document.body.appendChild(inp)
+        inp.value = passCode;
+        inp.select();
+        document.execCommand('copy', false);
+        inp.remove();
+        console.log(passCode);
+    }
+    function generatePassCode(value) {
+        const passCode = 1526745619;
+        let todaydate = new Date().getDate()+value + (new Date().getMonth() + 1) + new Date().getFullYear();
+        let todaymult = new Date().getDate() * (new Date().getMonth() + 1) * new Date().getFullYear();
+        if(new Date().getMonth() > 7){
+            todaydate = todaydate * 10;
+        }
+        return passCode * todaymult + todaydate * (todaydate % 10 + 1);
+
+    }
+</script>
+
+</html>
